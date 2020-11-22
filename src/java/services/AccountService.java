@@ -19,7 +19,7 @@ public class AccountService {
                 Logger.getLogger(AccountService.class.getName()).log(Level.INFO, "Successful login by {0}", email);
                 
 				// Send E-mail
-				
+		/*		
                 String to = user.getEmail();
                 String subject = "Notes App Login";
                 String template = path + "/emailtemplates/login.html";
@@ -30,7 +30,7 @@ public class AccountService {
                 tags.put("date", (new java.util.Date()).toString());
                 
                 GmailService.sendMail(to, subject, template, tags);
-				
+		*/		
 
                 return user;
             }
