@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
+import javax.naming.NamingException;
 import models.User;
 
 public class AccountService {
@@ -19,7 +21,7 @@ public class AccountService {
                 Logger.getLogger(AccountService.class.getName()).log(Level.INFO, "Successful login by {0}", email);
                 
 				// Send E-mail
-		/*		
+				
                 String to = user.getEmail();
                 String subject = "Notes App Login";
                 String template = path + "/emailtemplates/login.html";
@@ -30,7 +32,7 @@ public class AccountService {
                 tags.put("date", (new java.util.Date()).toString());
                 
                 GmailService.sendMail(to, subject, template, tags);
-		*/		
+				
 
                 return user;
             }
@@ -38,5 +40,19 @@ public class AccountService {
         }
         
         return null;
+    }
+    
+    public boolean ForgotPassword(String email){
+        UserDB userDB = new UserDB();
+        User user = userDB.get(email);
+        String to = user.getEmail();
+        try {
+            GmailService.sendMail(email, "Passwordreset", "Your password has been reset", false);
+        } catch (MessagingException ex) {
+            Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 }
